@@ -1,0 +1,6 @@
+{
+    "ressourceName": "assets/audio/test2.ogg",
+    "volume": 10,
+	"loop": true,
+    "active": false
+}

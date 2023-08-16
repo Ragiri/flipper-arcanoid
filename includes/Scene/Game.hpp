@@ -13,8 +13,7 @@ class Game: public Scene {
         ~Game() = default;
 
         void loadLvl(std::string lvl_name) {
-            std::ifstream m(LvlAssets[lvl_name]);
-			_map = nlohmann::json::parse(m);
+
         };
 
         SCENE action() override {
@@ -30,8 +29,12 @@ class Game: public Scene {
     private:
 		std::map<std::string, SCENE> _scenes;
 		Sprite _bg;
+		std::vector<std::vector<sf::Vector2f>> _wall;
+		std::vector<std::pair<sf::Vector2f, int>> _bumper;
+		std::vector<sf::Vector2f> _tile;
 		Audio _audio;
         nlohmann::json _map;
+
 };
 
 #endif /* !GAME_HPP_ */

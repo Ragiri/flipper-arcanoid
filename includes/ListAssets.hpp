@@ -41,7 +41,9 @@ inline std::map<std::string, std::string> LvlAssets = {
 
 inline std::map<std::string, std::string> spriteAssets = {
     std::make_pair("MainMenuBG", "assets/backgrounds/mainmenu.json"),
-    std::make_pair("GameBG", "assets/backgrounds/mainmenu.jpg"),
+    std::make_pair("GameBG", "assets/backgrounds/mainmenu.json"),
+    std::make_pair("AudioOutside", "assets/sprite/audio_outside.json"),
+    std::make_pair("AudioInside", "assets/sprite/audio_inside.json"),
 };
 
 

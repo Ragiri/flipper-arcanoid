@@ -8,7 +8,8 @@
 
 class Settings: public Scene {
     public:
-        Settings(sf::RenderWindow *window,  Events *event): Scene(window, event), _bg(spriteAssets["MainMenuBG"]), _a(audioAssets["MainMenu"]) {
+        Settings(sf::RenderWindow *window,  Events *event): Scene(window, event), _bg(spriteAssets["MainMenuBG"]), _a(audioAssets["MainMenu"]),
+		outside(spriteAssets["AudioOutside"]), inside(spriteAssets["AudioInside"]) {
 
         };
         ~Settings() = default;
@@ -22,12 +23,17 @@ class Settings: public Scene {
 				if (j["type"] != _actualSettingType)
 					tmp._display = false;
 				_texts.push_back(tmp);
-				if(j["type"] == "audio")
-					_audioSettings.insert(make_pair(tmp, j["value"]));
-				if(j["type"] == "keyboard")
-					_keyboardSettings.insert(make_pair(tmp, j["value"]));
+				if(j["type"] == "audio") {
+					outside.setPosition(sf::Vector2f(tmp.getText()->getPosition().x, tmp.getText()->getPosition().y));
+					inside.setPosition(sf::Vector2f(tmp.getText()->getPosition().x, tmp.getText()->getPosition().y));
+					_audioSettings.insert(std::make_pair(tmp, j["value"]));
+					_audio_sliders.insert(std::make_pair(tmp, std::make_pair(outside, inside)));
+					_sprites.push_back(&outside);
+					_sprites.push_back(&inside);
+				} if(j["type"] == "keyboard")
+					_keyboardSettings.insert(std::make_pair(tmp, j["value"]));
 				if(j["type"] == "graphic")
-					_graphicSettings.insert(make_pair(tmp, j["value"]));
+					_graphicSettings.insert(std::make_pair(tmp, j["value"]));
 			}
 			_audio.push_back(_a);
 			return true;
@@ -42,11 +48,15 @@ class Settings: public Scene {
 		}
 
 		void action_audio(Text t) {
-			
+			if (_event->collide(_audio_sliders[t].first.getSprite(), (sf::Vector2f)sf::Mouse::getPosition(*_window))) {
+				int tmp = _audio_sliders[t].first.getSprite().getTexture()->getSize().x * (1 / 100);
+				sf::IntRect actual_size = _audio_sliders[t].second.getSprite().getTextureRect();
+				_audioSettings[t] = tmp;
+				_audio_sliders[t].second.getSprite().setTextureRect(sf::IntRect(actual_size.left, actual_size.top, tmp,actual_size.height));
+			}
 		}
 
 		void action_graphic(Text t) {
-			
 		}
 		SCENE action() override {
 			for (auto &t: _texts) {
@@ -68,8 +78,12 @@ class Settings: public Scene {
 		Sprite _bg;
 		std::string _actualSettingType;
         std::map<Text, int> _keyboardSettings;
+		std::map<Text, std::pair<Sprite, Sprite>> _audio_sliders;
+		std::vector<std::string> _graphic_resolution;
 		std::map<Text, int> _audioSettings;
 		std::map<Text, int> _graphicSettings;
+		Sprite outside;
+		Sprite inside;
 		Audio _a;
 };
 

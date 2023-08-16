@@ -1,0 +1,8 @@
+{
+    "ressourceName": "assets/backgrounds/mainmenu.png",
+    "size": [1200, 1080],
+	"position": [0, 0],
+    "color": "None",
+	"rect": [0, 0, 1200, 1080],
+    "scale": [1, 1]
+}

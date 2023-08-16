@@ -7,8 +7,7 @@
 
 class SceneManagement {
     public:
-        SceneManagement(sf::RenderWindow *window, Events *event): t(window, event), m(window, event) {
-			_scenes[TEST] =  &t;
+        SceneManagement(sf::RenderWindow *window, Events *event): m(window, event) {
 			_scenes[MENU] =  &m;
 			_actual_scene = MENU;
 		};
@@ -24,7 +23,6 @@ class SceneManagement {
     private:
 		std::map<SCENE, Scene *> _scenes;
 	    SCENE _actual_scene;
-		Test t;
 		Menu m;
 };
 

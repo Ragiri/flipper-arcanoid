@@ -7,9 +7,10 @@
 class Menu: public Scene {
 	public:
 		Menu(sf::RenderWindow *window,  Events *event): Scene(window, event), s(spriteAssets["MainMenuBG"]),
-		q("Quit", {150, 100}, 14, sf::Color::White), t("Test", {150, 50}, 14, sf::Color::White),
-		a(audioAssets["MainMenu"]) {
+		q("Quit", {500, 400}, 35, sf::Color::White), t("GAME", {500, 300}, 35, sf::Color::White),
+		p("Settings", {500, 350}, 35, sf::Color::White), a(audioAssets["MainMenu"]) {
 			std::map<std::string, SCENE> scenes = {
+				{"Settings", SETTINGS},
 				{"GAME", GAME},
 				{"Quit", EXIT},
 			};
@@ -21,6 +22,7 @@ class Menu: public Scene {
 		bool initAssets() override {
 			_texts.push_back(t);
 			_texts.push_back(q);
+			_texts.push_back(p);
 			_sprites.push_back(&s);
 			_audio.push_back(a);
 			return true;
@@ -38,6 +40,7 @@ class Menu: public Scene {
 		std::map<std::string, SCENE> _scenes;
 		Sprite s;
 		Text q;
+		Text p;
 		Text t;
 		Audio a;
 };
