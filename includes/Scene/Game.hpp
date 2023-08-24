@@ -32,7 +32,7 @@ class Game: public Scene {
 					return _scenes[t.getString()];
 				}
 			}
-			return SETTINGS;
+			return GAME;
 		}
 
     private:
