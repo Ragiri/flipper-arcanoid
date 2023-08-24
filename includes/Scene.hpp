@@ -25,6 +25,8 @@ class Scene {
             for (auto &a: _audio)
                 if (a._active)
                     a.play();
+            for (auto &s: _shapes)
+                _window->draw(*s);
             
         }
         virtual SCENE action() = 0;
@@ -33,6 +35,7 @@ class Scene {
         sf::RenderWindow *_window;
         std::vector<Text> _texts;
         std::vector<Sprite*> _sprites;
+        std::vector<sf::Shape*> _shapes;
         std::vector<Audio> _audio;
         AnimationManagement _am;
         Events *_event;

@@ -4,7 +4,7 @@
 #include <nlohmann/json.hpp>
 #include "../Assets.hpp"
 #include "../Scene.hpp"
-
+#include "../LevelGenerator.hpp"
 
 class Game: public Scene {
     public:
@@ -12,9 +12,18 @@ class Game: public Scene {
         }
         ~Game() = default;
 
-        void loadLvl(std::string lvl_name) {
-
-        };
+		void loadGame(std::string lvl_name) {
+			_lvlgen.parseLvl(lvl_name);
+			_walls = _lvlgen.createWalls();
+			_bumpers = _lvlgen.createBumpers();
+			_tiles = _lvlgen.createTiles();
+			for (auto &w: _walls)
+				_shapes.push_back(&w);
+			for (auto &b: _bumpers)
+				_shapes.push_back(&b);
+			for (auto &t: _tiles)
+				_sprites.push_back(&t);
+		}
 
         SCENE action() override {
 			for (auto &t: _texts) {
@@ -29,10 +38,14 @@ class Game: public Scene {
     private:
 		std::map<std::string, SCENE> _scenes;
 		Sprite _bg;
-		std::vector<std::vector<sf::Vector2f>> _wall;
-		std::vector<std::pair<sf::Vector2f, int>> _bumper;
-		std::vector<sf::Vector2f> _tile;
+		Sprite _ball;
+		sf::RectangleShape _flipperLeft;
+		sf::RectangleShape _flipperRight;
 		Audio _audio;
+		LevelGenerator _lvlgen;
+		std::vector<sf::ConvexShape> _walls;
+		std::vector<sf::CircleShape> _bumpers;
+		std::vector<Sprite> _tiles;
         nlohmann::json _map;
 
 };

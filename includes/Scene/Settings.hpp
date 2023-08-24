@@ -42,8 +42,8 @@ class Settings: public Scene {
 		void action_keyboard(Text t) {
 			if(_event->collide(*t.getText(), (sf::Vector2f)sf::Mouse::getPosition(*_window))
 			&& sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				while (!_event->getEvent()->KeyPressed);
-				_keyboardSettings[t] = _event->getEvent()->key.code;
+				_keyboardSettings[t] = _event->getKeySetting(_window);
+				keyboardSet[t.getString()] = _keyboardSettings[t];
 			}
 		}
 
@@ -77,7 +77,7 @@ class Settings: public Scene {
 		std::map<std::string, SCENE> _scenes;
 		Sprite _bg;
 		std::string _actualSettingType;
-        std::map<Text, int> _keyboardSettings;
+        std::map<Text, sf::Keyboard::Key> _keyboardSettings;
 		std::map<Text, std::pair<Sprite, Sprite>> _audio_sliders;
 		std::vector<std::string> _graphic_resolution;
 		std::map<Text, int> _audioSettings;

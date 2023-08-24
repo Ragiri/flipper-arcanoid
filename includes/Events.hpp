@@ -25,21 +25,34 @@ class Events {
             }
             return false;
         };
+        sf::Keyboard::Key getKeySetting(sf::Window *_window) {
+		    while(_window->pollEvent(_event)) {
+				while (!_event.KeyPressed);
+				return _event.key.code;
+            }
+        }
         bool collide(sf::Sprite first, sf::Sprite second) {
             return first.getGlobalBounds().intersects(second.getGlobalBounds());
         };
-
         bool collide(sf::Sprite first, sf::Vector2f second) {
             return first.getGlobalBounds().contains(second);
         }
-
+        bool collide(sf::RectangleShape first, sf::FloatRect second) {
+            return first.getGlobalBounds().intersects(second);
+        }
         bool collide(sf::Text first, sf::Vector2f second) {
             return first.getGlobalBounds().contains(second);
         }
-
-        bool quadrantTriggered(std::queue<sf::Keyboard::Key> &input_queue) {
-            return false;
-        };
+        void moveFlippers(sf::Sprite *left, sf::Sprite *right) {
+            if (sf::Keyboard::isKeyPressed(keyboardSet["Left"])) {
+                left->setPosition(sf::Vector2f(left->getPosition().x - 2, left->getPosition().y));
+                right->setPosition(sf::Vector2f(right->getPosition().x - 2, right->getPosition().y));
+            }
+            if (sf::Keyboard::isKeyPressed(keyboardSet["Right"])) {
+                left->setPosition(sf::Vector2f(left->getPosition().x + 2, left->getPosition().y));
+                right->setPosition(sf::Vector2f(right->getPosition().x + 2, right->getPosition().y));
+            }
+        }
         sf::Event *getEvent() { return &_event; };
     private:
         sf::Event _event;
