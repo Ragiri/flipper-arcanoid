@@ -48,7 +48,16 @@ class LevelGenerator {
 			return true;
         };
 		std::vector<sf::ConvexShape> createWalls() {
+            std::vector<sf::ConvexShape> res;
 
+            for (auto &w: _wall) {
+                sf::ConvexShape tmp(w.size());
+                for (int i = 0; i != w.size(); i++)
+                    tmp.setPoint(i, w[i]);
+                tmp.setFillColor(sf::Color::Magenta);
+                res.push_back(tmp);
+            }
+            return res;
         }
         std::vector<Sprite> createTiles() {
             
