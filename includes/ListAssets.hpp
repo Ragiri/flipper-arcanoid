@@ -2,6 +2,8 @@
 #define LISTASSETS_HPP_
 #include <iostream>
 #include <map>
+#include <SFML/Graphics.hpp>
+#include <vector>
 
 enum InputType {
     UP,
@@ -33,17 +35,24 @@ inline std::map<std::string, std::string> settingsAssets = {
     std::make_pair("graphics_setting", "assets/commandList/GraphicsSettings.json"),
 };
 
-inline std::map<std::string, std::string> LvlAssets = {
-    std::make_pair("lvl1", "assets/levels/1.tkt"),
-    std::make_pair("lvl2", "assets/levels/2.tkt"),
+inline std::vector<std::string> LvlAssets = {
+    "assets/levels/1.tkt",
+    "assets/levels/2.tkt",
 };
 
 
 inline std::map<std::string, std::string> spriteAssets = {
-    std::make_pair("MainMenuBG", "assets/backgrounds/mainmenu.json"),
-    std::make_pair("GameBG", "assets/backgrounds/mainmenu.json"),
-    std::make_pair("AudioOutside", "assets/sprite/audio_outside.json"),
-    std::make_pair("AudioInside", "assets/sprite/audio_inside.json"),
+    std::make_pair("MainMenuBG", "assets/sprites/mainmenubg.json"),
+    std::make_pair("MainMenu", "assets/sprites/mainmenu.json"),
+    std::make_pair("GameBG", "assets/sprites/gamebg.json"),
+    std::make_pair("Tile", "assets/sprites/tile.json"),
+    std::make_pair("AudioOutside", "assets/sprites/audio_outside.json"),
+    std::make_pair("AudioInside", "assets/sprites/audio_inside.json"),
+};
+
+inline std::map<std::string, std::string> textureAssets = {
+    std::make_pair("Bumper", "assets/texture/bumper.png"),
+    std::make_pair("Ball", "assets/texture/ball.png"),
 };
 
 inline std::map<std::string, sf::Keyboard::Key> keyboardSet = {
@@ -54,7 +63,8 @@ inline std::map<std::string, sf::Keyboard::Key> keyboardSet = {
 };
 
 inline std::map<std::string, std::string> fontAssets = {
-    std::make_pair("interface", "assets/font/OpenSans-Bold.ttf"),
+    std::make_pair("interface", "assets/font/Funtastic.otf"),
+    std::make_pair("game", "assets/font/OpenSans-Bold.ttf"),
 };
 
 

@@ -6,10 +6,13 @@
 
 class LevelGenerator {
     public:
-        LevelGenerator(std::string lvlname) {
+        LevelGenerator(std::string lvlname): _t(spriteAssets["Tile"]) {
             parseLvl(lvlname);
+            _bumperTexture.loadFromFile(textureAssets["Bumper"]);
         };
-        LevelGenerator() {};
+        LevelGenerator(): _t(spriteAssets["Tile"]) {
+            _bumperTexture.loadFromFile(textureAssets["Bumper"]);
+        };
         ~LevelGenerator() = default;
 
 		std::vector<sf::Vector2f> add_to_vector(std::string line, std::vector<sf::Vector2f> vect) {
@@ -28,25 +31,30 @@ class LevelGenerator {
 			std::ifstream f(lvl_name);
 			if (f.is_open()) {
 				while (getline(f,tmp)) {
-					for (int i = 0; i != tmp.size(); i++) {
-						switch (tmp[i]) {
-							case '{':
-								_wall.push_back(add_to_vector(tmp, std::vector<sf::Vector2f>()));
-								break;
-							case '(':
-								add_to_vector(tmp, _tile);
-								break;
-							case '[':
-								add_to_vector(tmp, _bumper);
-								break;
-							default:
-								break;
-						}
+					switch (tmp[0]) {
+						case '{':
+							_wall.push_back(add_to_vector(tmp, std::vector<sf::Vector2f>()));
+							break;
+						case '(':
+							_tile = add_to_vector(tmp.substr(1, tmp.size() - 2), _tile);
+							break;
+						case '[':
+							_bumper = add_to_vector(tmp, _bumper);
+							break;
+						default:
+							break;
 					}
 				}
 			} else return false;
 			return true;
         };
+
+
+        void clearAll() {
+            _wall.clear();
+            _bumper.clear();
+            _tile.clear();
+        }
 		std::vector<sf::ConvexShape> createWalls() {
             std::vector<sf::ConvexShape> res;
 
@@ -54,21 +62,40 @@ class LevelGenerator {
                 sf::ConvexShape tmp(w.size());
                 for (int i = 0; i != w.size(); i++)
                     tmp.setPoint(i, w[i]);
-                tmp.setFillColor(sf::Color::Magenta);
+                tmp.setFillColor(sf::Color::White);
                 res.push_back(tmp);
             }
             return res;
         }
+
         std::vector<Sprite> createTiles() {
-            
+            std::vector<Sprite> res;
+
+            for (auto &t: _tile) {
+                _t.setPosition(sf::Vector2f(t.x, t.y));
+                res.push_back(_t);
+            }
+            return res;
         }
+
         std::vector<sf::CircleShape> createBumpers() {
+            std::vector<sf::CircleShape> res;
             
+            for (auto &b: _bumper) {
+                int r = (std::rand() % (15 - 5 + 1)) + 5;
+                sf::CircleShape tmp(r);
+                tmp.setTexture(&_bumperTexture);
+                tmp.setPosition(sf::Vector2f(b.x, b.y));
+                res.push_back(tmp);
+            }
+            return res;
         }
 
     private:
+        sf::Texture _bumperTexture;
 		std::vector<std::vector<sf::Vector2f>> _wall;
 		std::vector<sf::Vector2f> _bumper;
+        Sprite _t;
 		std::vector<sf::Vector2f> _tile;
 };
 

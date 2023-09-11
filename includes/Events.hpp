@@ -16,8 +16,12 @@ class Events {
     public:
         Events() {};
         ~Events() = default;
-        bool closed(sf::Window *_window, SCENE s) {
+        bool closed(sf::RenderWindow *_window, SCENE s) {
 		    while(_window->pollEvent(_event)) {
+                if(_event.type == sf::Event::Resized) {
+                    sf::FloatRect view(0, 0, _event.size.width, _event.size.height);
+                    _window->setView(sf::View(view));
+                }
                 if (_event.type == sf::Event::Closed || s == EXIT) {
 		    		_window->close();
                     return true;
@@ -25,7 +29,7 @@ class Events {
             }
             return false;
         };
-        sf::Keyboard::Key getKeySetting(sf::Window *_window) {
+        sf::Keyboard::Key getKeySetting(sf::RenderWindow *_window) {
 		    while(_window->pollEvent(_event)) {
 				while (!_event.KeyPressed);
 				return _event.key.code;

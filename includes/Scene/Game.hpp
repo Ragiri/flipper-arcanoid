@@ -8,7 +8,10 @@
 
 class Game: public Scene {
     public:
-        Game(sf::RenderWindow *window,  Events *event): Scene(window, event), _bg(spriteAssets["MainMenuBG"]), _audio(audioAssets["MainMenu"]) {
+        Game(sf::RenderWindow *window,  Events *event, sf::View *view, sf::Uint32 style): Scene(window, event, view, style),
+		_bg(spriteAssets["GameBG"]), _musicbg(audioAssets["MainMenu"]){
+			_actual_lvl = 0;
+			loadGame(LvlAssets[_actual_lvl]);
         }
         ~Game() = default;
 
@@ -17,12 +20,32 @@ class Game: public Scene {
 			_walls = _lvlgen.createWalls();
 			_bumpers = _lvlgen.createBumpers();
 			_tiles = _lvlgen.createTiles();
+			initAssets();
+		}
+
+		void onClickNextLvl() {
+			_lvlgen.clearAll();
+			_sprites.clear();
+			_shapes.clear();
+			_actual_lvl += 1;
+			loadGame(LvlAssets[_actual_lvl]);
+		};
+		bool initAssets() override {
+			//_texts.push_back(_scoreText);
+			//_texts.push_back(_lvlText);
+			//_texts.push_back(p);
+			_sprites.push_back(&_bg);
+			_shapes.push_back(&_ball);
+			_shapes.push_back(&_flipperLeft);
+			_shapes.push_back(&_flipperRight);
+			_audio.push_back(_musicbg);
 			for (auto &w: _walls)
 				_shapes.push_back(&w);
 			for (auto &b: _bumpers)
 				_shapes.push_back(&b);
 			for (auto &t: _tiles)
 				_sprites.push_back(&t);
+			return true;
 		}
 
         SCENE action() override {
@@ -38,10 +61,12 @@ class Game: public Scene {
     private:
 		std::map<std::string, SCENE> _scenes;
 		Sprite _bg;
-		Sprite _ball;
+		int _actual_lvl;
+		long int _score;
+		sf::CircleShape _ball;
 		sf::RectangleShape _flipperLeft;
 		sf::RectangleShape _flipperRight;
-		Audio _audio;
+		Audio _musicbg;
 		LevelGenerator _lvlgen;
 		std::vector<sf::ConvexShape> _walls;
 		std::vector<sf::CircleShape> _bumpers;

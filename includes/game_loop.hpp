@@ -18,12 +18,17 @@ class game_loop
 	private:
 		sf::RenderWindow _window;
 		Events _events;
+		sf::View _view;
 		SceneManagement _sm;
 		sf::Vector2f _resolution;
 
 	public:
-		game_loop(int x, int y): _sm(&_window, &_events) {
+		game_loop(int x, int y): _sm(&_window, &_events, sf::Style::Default, &_view) {
 			_window.setKeyRepeatEnabled(false);
+			_resolution.x = x;
+			_resolution.y = y;
+			_view.setSize(_window.getSize().x, _window.getSize().y);
+			_window.setView(_view);
 		};
 		~game_loop() = default;
 		bool createWindow() {
@@ -34,16 +39,8 @@ class game_loop
 			return &_window;
 		}
 
-		void parse_map(std::string map_name) {
-			std::string tmp;
-			std::ifstream f(map_name);
-			if (f.is_open()) {
-    			getline(f,tmp);
-				_resolution = sf::Vector2f(std::stoi(tmp.substr(0, tmp.size() - (tmp.size() - findNOccur(tmp, ',', 1) - 1))),
-				std::stoi(tmp.substr(findNOccur(tmp, ',', 1) + 1, tmp.size() - findNOccur(tmp, '(', 1) + 1)));
-			}
-		}
 		void loop() {
+
 			while (_window.isOpen()) {
 				this->clear();
 				_sm.getActualScene()->run();

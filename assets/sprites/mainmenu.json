@@ -1,0 +1,8 @@
+{
+    "ressourceName": "assets/texture/mainmenu.png",
+    "size": [520, 480],
+	"position": [0, 0],
+    "color": "None",
+	"rect": [0, 0, 520, 480],
+    "scale": [1, 1]
+}

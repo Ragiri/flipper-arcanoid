@@ -7,8 +7,10 @@
 
 class SceneManagement {
     public:
-        SceneManagement(sf::RenderWindow *window, Events *event): m(window, event) {
+        SceneManagement(sf::RenderWindow *window, Events *event, sf::Uint32 style, sf::View *view): m(window, event, view, style),
+		g(window, event, view, style) {
 			_scenes[MENU] =  &m;
+			_scenes[GAME] = &g;
 			_actual_scene = MENU;
 		};
         ~SceneManagement() = default;
@@ -24,6 +26,7 @@ class SceneManagement {
 		std::map<SCENE, Scene *> _scenes;
 	    SCENE _actual_scene;
 		Menu m;
+		Game g;
 };
 
 #endif /* !SCENEMANAGEMENT_HPP_ */

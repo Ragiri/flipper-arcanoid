@@ -1,0 +1,8 @@
+{
+    "ressourceName": "assets/texture/gamebg.png",
+    "size": [1092, 616],
+	"position": [0, 0],
+    "color": "None",
+	"rect": [0, 0, 1092, 616],
+    "scale": [1, 1]
+}
