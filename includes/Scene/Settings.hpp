@@ -8,7 +8,8 @@
 
 class Settings: public Scene {
     public:
-        Settings(sf::RenderWindow *window,  Events *event): Scene(window, event), _bg(spriteAssets["MainMenuBG"]), _a(audioAssets["MainMenu"]),
+        Settings(sf::RenderWindow *window,  Events *event, sf::View *view, sf::Uint32 style): Scene(window, event, view, style), 
+		_bg(spriteAssets["MainMenuBG"]), _a(audioAssets["MainMenu"]),
 		outside(spriteAssets["AudioOutside"]), inside(spriteAssets["AudioInside"]) {
 
         };

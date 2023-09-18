@@ -14,16 +14,6 @@ enum InputType {
     SPACE,
 };
 
-enum ActionType {
-    Move_Right,
-    Move_Left,
-    Jump,
-    Bend_Down,
-    Grab,
-    Frontal_Attack,
-    Ranged_Attack,
-};
-
 inline std::map<std::string, std::string> audioAssets = {
     std::make_pair("MainMenu", "assets/audio/mainmenu.json"),
     std::make_pair("Game", "assets/audio/mainmenu.json"),
@@ -63,6 +53,7 @@ inline std::map<std::string, sf::Keyboard::Key> keyboardSet = {
 };
 
 inline std::map<std::string, std::string> fontAssets = {
+    std::make_pair("interface2", "assets/font/00249 Regular.ttf"),
     std::make_pair("interface", "assets/font/Funtastic.otf"),
     std::make_pair("game", "assets/font/OpenSans-Bold.ttf"),
 };

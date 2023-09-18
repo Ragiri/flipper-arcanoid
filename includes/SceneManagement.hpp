@@ -4,12 +4,13 @@
 #include <unordered_map>
 #include "Scene/Menu.hpp"
 #include "Scene/Game.hpp"
-
+//#include "Scene/Settings.hpp"
 class SceneManagement {
     public:
         SceneManagement(sf::RenderWindow *window, Events *event, sf::Uint32 style, sf::View *view): m(window, event, view, style),
-		g(window, event, view, style) {
+		g(window, event, view, style) /*s(window,event, view, style)*/ {
 			_scenes[MENU] =  &m;
+			//_scenes[SETTINGS] =  &s;
 			_scenes[GAME] = &g;
 			_actual_scene = MENU;
 		};
@@ -27,6 +28,7 @@ class SceneManagement {
 	    SCENE _actual_scene;
 		Menu m;
 		Game g;
+		//Settings s;
 };
 
 #endif /* !SCENEMANAGEMENT_HPP_ */

@@ -82,7 +82,7 @@ class LevelGenerator {
             std::vector<sf::CircleShape> res;
             
             for (auto &b: _bumper) {
-                int r = (std::rand() % (15 - 5 + 1)) + 5;
+                int r = (std::rand() % (25 - 10 + 1)) + 5;
                 sf::CircleShape tmp(r);
                 tmp.setTexture(&_bumperTexture);
                 tmp.setPosition(sf::Vector2f(b.x, b.y));

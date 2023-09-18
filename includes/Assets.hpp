@@ -33,29 +33,21 @@ class Text {
 	public:
 		Text(std::string str) {
 			_millisecond = 0;
-			if (!_font.loadFromFile(fontAssets["interface"]))
+			if (!_font.loadFromFile(fontAssets["interface2"]))
             	std::cerr << "Could not load texture" << std::endl;
 			this->setStr(str);
 			_display = true;
 		};
 		Text(std::string str, sf::Vector2f vect, int size, sf::Color color) {
 			_millisecond = 0;
-			if (!_font.loadFromFile(fontAssets["interface"]))
+			if (!_font.loadFromFile(fontAssets["interface2"]))
             	std::cerr << "Could not load texture" << std::endl;
 			this->setStr(str);
 			this->setText(vect, size, color);
 			_display = true;
 		};
 		~Text() = default;
-		sf::Text createText(std::string str, sf::Vector2f vect, int size, sf::Color color) {
-        	sf::Text text(str, _font, size);
-        	text.setPosition(vect);
-			text.setFont(_font);
-        	text.setFillColor(color);
-			text.setCharacterSize(size);
-        	_text = text;
-        	return text;
-    	};
+		
 		void setText(sf::Vector2f vect, int size, sf::Color color) {
         	_text.setPosition(vect);
 			_text.setCharacterSize(size);

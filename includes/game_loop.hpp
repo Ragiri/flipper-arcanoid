@@ -6,12 +6,12 @@
 #include "SceneManagement.hpp"
 #include "Events.hpp"
 
-enum Action {
-	SLITHE_PROBE,
-	DISCARD_PROBE,
-	GO_DOWN,
-	JUMP,
-};
+//enum Action {
+//	SLITHE_PROBE,
+//	DISCARD_PROBE,
+//	GO_DOWN,
+//	JUMP,
+//};
 
 class game_loop
 {
